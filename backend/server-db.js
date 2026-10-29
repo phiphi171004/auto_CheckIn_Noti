@@ -19,12 +19,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Serve React production build or old frontend
+// Serve React production build
 const reactBuildPath = path.join(__dirname, '../frontend-react/dist');
-const oldFrontendPath = path.join(__dirname, '../frontend');
 
 app.use(express.static(reactBuildPath));
-app.use(express.static(oldFrontendPath));
 
 // Shape an account for the browser: never expose credentials or tokens.
 function toPublicAccount(acc) {
