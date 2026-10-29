@@ -136,25 +136,38 @@ export function formatClock(date) {
 }
 
 export function formatDateTime(value) {
+  if (!value) return '—'
+  
+  // Parse as UTC since DB stores VN time but without timezone info
+  // When JavaScript parses it, it treats as UTC, then converts to local (+7)
+  // We need to subtract 7 hours to get back to original VN time
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return '—'
   
-  // DB already stores VN time, no conversion needed
-  return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} · ${pad(date.getHours())}:${pad(date.getMinutes())}`
+  // Subtract timezone offset to display the original DB time
+  const offsetMs = 7 * 60 * 60 * 1000 // 7 hours in milliseconds
+  const vnDate = new Date(date.getTime() - offsetMs)
+  
+  return `${pad(vnDate.getDate())}/${pad(vnDate.getMonth() + 1)}/${vnDate.getFullYear()} · ${pad(vnDate.getHours())}:${pad(vnDate.getMinutes())}`
 }
 
 export function formatShort(value) {
+  if (!value) return '—'
+  
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return '—'
   
-  // DB already stores VN time, no conversion needed
+  // Subtract 7 hours to display original VN time from DB
+  const offsetMs = 7 * 60 * 60 * 1000
+  const vnDate = new Date(date.getTime() - offsetMs)
+  
   const now = new Date()
   const yesterday = new Date(now)
   yesterday.setDate(now.getDate() - 1)
 
-  if (isSameDay(date, now)) return `Hôm nay · ${formatClock(date)}`
-  if (isSameDay(date, yesterday)) return `Hôm qua · ${formatClock(date)}`
-  return `${pad(date.getDate())}/${pad(date.getMonth() + 1)} · ${formatClock(date)}`
+  if (isSameDay(vnDate, now)) return `Hôm nay · ${formatClock(vnDate)}`
+  if (isSameDay(vnDate, yesterday)) return `Hôm qua · ${formatClock(vnDate)}`
+  return `${pad(vnDate.getDate())}/${pad(vnDate.getMonth() + 1)} · ${formatClock(vnDate)}`
 }
 
 export function todayHeading(now = new Date()) {
