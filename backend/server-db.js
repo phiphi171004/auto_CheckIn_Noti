@@ -21,8 +21,9 @@ app.use(express.json());
 
 // Serve React production build
 const reactBuildPath = path.join(__dirname, '../frontend-react/dist');
-
 app.use(express.static(reactBuildPath));
+
+console.log('📂 Serving frontend from:', reactBuildPath);
 
 // Shape an account for the browser: never expose credentials or tokens.
 function toPublicAccount(acc) {
