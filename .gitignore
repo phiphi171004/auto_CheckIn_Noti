@@ -1,0 +1,53 @@
+# Node modules
+node_modules/
+backend/node_modules/
+frontend-react/node_modules/
+
+# Environment files (BẢO MẬT - không được commit!)
+.env
+.env.local
+.env.*.local
+backend/.env
+
+# IDE & Kiro tools
+.vscode/
+.idea/
+.kiro/
+.taste-skill/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temp files
+temp/
+tmp/
+.cache/
+
+# CSV exports (captured data)
+*.csv
+api/
+check_in/
+login_gg/
+
+# PM2 (nếu dùng)
+.pm2/
+ecosystem.config.js
+
+# Build output (KHÔNG ignore dist vì cần để deploy)
+# frontend-react/dist/ - KEEP THIS for deployment!
