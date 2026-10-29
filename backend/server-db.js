@@ -495,13 +495,7 @@ async function setupCronJobs() {
 // Catch-all route for React Router (SPA)
 app.get('*', (req, res) => {
   const reactIndexPath = path.join(__dirname, '../frontend-react/dist/index.html');
-  const oldIndexPath = path.join(__dirname, '../frontend/index.html');
-  
-  res.sendFile(reactIndexPath, (err) => {
-    if (err) {
-      res.sendFile(oldIndexPath);
-    }
-  });
+  res.sendFile(reactIndexPath);
 });
 
 // Start server
